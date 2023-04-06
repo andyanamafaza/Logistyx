@@ -14,12 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    }else{
-        return redirect()->route('register');
-    }
-    // return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
@@ -28,6 +23,6 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+        return view('welcome');
+    })->name('welcome');
 });

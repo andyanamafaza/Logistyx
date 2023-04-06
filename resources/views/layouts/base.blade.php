@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>{{ Config::get('app.name'); }} | @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -99,7 +99,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE-3/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('AdminLTE-3/dist/js/pages/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('AdminLTE-3/dist/js/pages/dashboard.js') }}"></script> --}}
 </body>
 
 </html>
