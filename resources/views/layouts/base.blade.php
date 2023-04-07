@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ Config::get('app.name') }} | @yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -129,7 +130,7 @@
     <script src="{{ asset('AdminLTE-3/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
+    <script src="{{ asset('js/bootstrapValidator.min.js') }}"></script>
 
     @stack('scripts')
 
