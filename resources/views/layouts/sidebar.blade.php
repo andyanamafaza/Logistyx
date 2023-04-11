@@ -56,23 +56,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('produk.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-cubes"></i>
                         <p>
                             Produk
                         </p>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fa fa-id-card"></i>
-                        <p>
-                            Member
-                        </p>
-                    </a>
-                </li> --}}
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('supplier.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-truck"></i>
                         <p>
                             Supplier
