@@ -58,8 +58,7 @@ class KategoriController extends Controller
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->save();
 
-        
-
+        return redirect('kategori')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -99,6 +98,7 @@ class KategoriController extends Controller
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->update();
 
+        return redirect('kategori')->with('success', 'Data berhasil disimpan');
         // return response()->json('Data berhasil disimpan', 200);
     }
 
