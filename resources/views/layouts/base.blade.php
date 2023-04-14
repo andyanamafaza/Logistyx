@@ -12,6 +12,7 @@
         href="{{ asset('AdminLTE-3/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('AdminLTE-3/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-3/plugins/fontawesome-free-6.4.0/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet"
         href="{{ asset('AdminLTE-3/https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css') }}">
