@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
-use Illuminate\Http\Request;
 use App\Models\Produk;
-use PDF;
+use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
@@ -25,7 +24,7 @@ class ProdukController extends Controller
     {
         $produk = Produk::leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
             ->select('produk.*', 'nama_kategori')
-            // ->orderBy('kode_produk', 'asc')
+            ->orderBy('kode_produk', 'asc')
             ->get();
 
         return datatables()
@@ -40,13 +39,13 @@ class ProdukController extends Controller
                 return '<span class="label label-success">'. $produk->kode_produk .'</span>';
             })
             ->addColumn('harga_beli', function ($produk) {
-                return format_uang($produk->harga_beli);
+                return uang_indonesia($produk->harga_beli);
             })
             ->addColumn('harga_jual', function ($produk) {
-                return format_uang($produk->harga_jual);
+                return uang_indonesia($produk->harga_jual);
             })
             ->addColumn('stok', function ($produk) {
-                return format_uang($produk->stok);
+                return uang_indonesia($produk->stok);
             })
             ->addColumn('aksi', function ($produk) {
                 return '
@@ -83,7 +82,7 @@ class ProdukController extends Controller
 
         $produk = Produk::create($request->all());
 
-        return response()->json('Data berhasil disimpan', 200);
+        return redirect('produk')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -122,7 +121,7 @@ class ProdukController extends Controller
         $produk = Produk::find($id);
         $produk->update($request->all());
 
-        return response()->json('Data berhasil disimpan', 200);
+        return redirect('produk')->with('success', 'Data berhasil diubah');
     }
 
     /**
@@ -147,19 +146,5 @@ class ProdukController extends Controller
         }
 
         return response(null, 204);
-    }
-
-    public function cetakBarcode(Request $request)
-    {
-        $dataproduk = array();
-        foreach ($request->id_produk as $id) {
-            $produk = Produk::find($id);
-            $dataproduk[] = $produk;
-        }
-
-        $no  = 1;
-        $pdf = PDF::loadView('produk.barcode', compact('dataproduk', 'no'));
-        $pdf->setPaper('a4', 'potrait');
-        return $pdf->stream('produk.pdf');
     }
 }
