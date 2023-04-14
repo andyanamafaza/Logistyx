@@ -4,9 +4,9 @@
     Daftar Produk
 @endsection
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">@yield('title')</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
@@ -17,7 +17,6 @@
                 <div class="btn-group">
                     <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
                     <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
-                    <button onclick="cetakBarcode('{{ route('produk.cetak_barcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
                 </div>
             </div>
             <div class="box-body table-responsive">
@@ -35,7 +34,6 @@
                             <th>Merk</th>
                             <th>Harga Beli</th>
                             <th>Harga Jual</th>
-                            <th>Diskon</th>
                             <th>Stok</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
@@ -71,7 +69,6 @@
                 {data: 'merk'},
                 {data: 'harga_beli'},
                 {data: 'harga_jual'},
-                {data: 'diskon'},
                 {data: 'stok'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]

@@ -4,9 +4,9 @@
     Daftar Supplier
 @endsection
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">@yield('title')</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
