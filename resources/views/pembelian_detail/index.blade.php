@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.base')
 
 @section('title')
     Transaksi Pembelian
@@ -31,9 +31,9 @@
 </style>
 @endpush
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">Transaksi Pembelian</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
