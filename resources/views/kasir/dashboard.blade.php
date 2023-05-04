@@ -1,12 +1,12 @@
-@extends('layouts.master')
+@extends('layouts.base')
 
 @section('title')
     Dashboard
 @endsection
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">Dashboard</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
