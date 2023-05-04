@@ -4,9 +4,9 @@
     Daftar Pembelian
 @endsection
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">Daftar Pembelian</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
