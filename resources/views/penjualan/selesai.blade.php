@@ -1,12 +1,12 @@
-@extends('layouts.master')
+@extends('layouts.base')
 
 @section('title')
     Transaksi Penjualan
 @endsection
 
-@section('breadcrumb')
+@section('badge')
     @parent
-    <li class="active">Transaksi Penjualan</li>
+    <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
 @section('content')
