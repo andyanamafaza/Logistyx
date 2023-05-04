@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\Produk;
+use App\Models\Gudang;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -16,14 +17,16 @@ class ProdukController extends Controller
     public function index()
     {
         $kategori = Kategori::all()->pluck('nama_kategori', 'id_kategori');
+        $gudang = Gudang::all()->pluck('nama_gudang', 'id_gudang');
 
-        return view('produk.index', compact('kategori'));
+        return view('produk.index', compact('kategori', 'gudang'));
     }
 
     public function data()
     {
         $produk = Produk::leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
-            ->select('produk.*', 'nama_kategori')
+            ->leftJoin('gudang', 'gudang.id_gudang', 'produk.id_gudang')
+            ->select('produk.*', 'nama_kategori', 'nama_gudang')
             ->orderBy('kode_produk', 'asc')
             ->get();
 
@@ -77,12 +80,20 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+
         $produk = Produk::latest()->first() ?? new Produk();
         $request['kode_produk'] = tambah_nol_didepan((int)$produk->id_kategori, (int)$produk->id_produk);
-
         $produk = Produk::create($request->all());
-
-        return redirect('produk')->with('success', 'Data berhasil ditambahkan');
+        $ukuran_total_produk = $produk->stok * $produk->ukuran_produk;
+        $gudang = Gudang::find($produk->id_gudang);
+        if($gudang->ukuran_gudang < $ukuran_total_produk){
+            $produk->delete();
+            return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
+        }else{
+            $gudang->ukuran_gudang -= $ukuran_total_produk;
+            $gudang->save();
+            return redirect('produk')->with('success', 'Data berhasil ditambahkan');
+        }
     }
 
     /**
@@ -119,10 +130,37 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::find($id);
+        $stokLama = $produk->stok;
+        $ukuranProduk = $produk->ukuran;
         $produk->update($request->all());
+
+        $selisihStok = $produk->stok - $stokLama;
+        $ukuranBaru = $produk->ukuran;
+        $ukuranTotalBaru = $produk->stok * $ukuranBaru;
+        $ukuranTotalLama = $stokLama * $ukuranProduk;
+        $selisihUkuranTotal = $ukuranTotalBaru - $ukuranTotalLama;
+
+        if ($selisihUkuranTotal > 0) {
+            $gudang = Gudang::find($produk->id_gudang);
+            if($gudang->ukuran_gudang < $selisihUkuranTotal) {
+                $produk->stok = $stokLama;
+                $produk->ukuran = $ukuranProduk;
+                $produk->save();
+                return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
+            }else{
+                $gudang->ukuran_gudang -= $selisihUkuranTotal;
+                $gudang->save();
+            }
+        } else if ($selisihUkuranTotal < 0) {
+            $gudang = Gudang::find($produk->id_gudang);
+            $gudang->ukuran_gudang -= $selisihUkuranTotal;
+            $gudang->save();
+        }
 
         return redirect('produk')->with('success', 'Data berhasil diubah');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -133,6 +171,10 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = Produk::find($id);
+        $ukuran_total_produk = $produk->stok * $produk->ukuran_produk;
+        $gudang = Gudang::find($produk->id_gudang);
+        $gudang->ukuran_gudang += $ukuran_total_produk;
+        $gudang->save();
         $produk->delete();
 
         return response(null, 204);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\GudangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,4 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
     Route::resource('/supplier', SupplierController::class);
+
+    Route::get('/gudang/data', [GudangController::class, 'data'])->name('gudang.data');
+    Route::resource('/gudang', GudangController::class);
 });

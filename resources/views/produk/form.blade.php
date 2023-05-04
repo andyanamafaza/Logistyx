@@ -19,6 +19,18 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="id_gudang" class="col-lg-2 col-lg-offset-1 control-label">Gudang</label>
+                        <div class="col-lg-6">
+                            <select name="id_gudang" id="id_gudang" class="form-control" required>
+                                <option value="">Pilih Gudang</option>
+                                @foreach ($gudang as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
+                            <span class="help-block with-errors"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="id_kategori" class="col-lg-2 col-lg-offset-1 control-label">Kategori</label>
                         <div class="col-lg-6">
                             <select name="id_kategori" id="id_kategori" class="form-control" required>
@@ -55,6 +67,13 @@
                         <label for="stok" class="col-lg-2 col-lg-offset-1 control-label">Stok</label>
                         <div class="col-lg-6">
                             <input type="number" name="stok" id="stok" class="form-control" required value="0">
+                            <span class="help-block with-errors"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ukuran_produk" class="col-lg-2 col-lg-offset-1 control-label">Ukuran produk</label>
+                        <div class="col-lg-6">
+                            <input type="number" name="ukuran_produk" id="ukuran_produk" class="form-control" required>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>

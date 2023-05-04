@@ -28,13 +28,15 @@
                                 <input type="checkbox" name="select_all" id="select_all">
                             </th>
                             <th width="5%">No</th>
-                            <th>Kode</th>
+                            <th>Kode Produk</th>
+                            <th>Gudang</th>
                             <th>Nama</th>
                             <th>Kategori</th>
                             <th>Merk</th>
                             <th>Harga Beli</th>
                             <th>Harga Jual</th>
                             <th>Stok</th>
+                            <th>Ukuran Produk</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
@@ -64,12 +66,14 @@
                 {data: 'select_all', searchable: false, sortable: false},
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'kode_produk'},
+                {data: 'nama_gudang'},
                 {data: 'nama_produk'},
                 {data: 'nama_kategori'},
                 {data: 'merk'},
                 {data: 'harga_beli'},
                 {data: 'harga_jual'},
                 {data: 'stok'},
+                {data: 'ukuran_produk'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
         });
@@ -115,12 +119,14 @@
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama_produk]').val(response.nama_produk);
+                $('#modal-form [name=id_gudang]').val(response.id_gudang);
                 $('#modal-form [name=id_kategori]').val(response.id_kategori);
                 $('#modal-form [name=merk]').val(response.merk);
                 $('#modal-form [name=harga_beli]').val(response.harga_beli);
                 $('#modal-form [name=harga_jual]').val(response.harga_jual);
                 $('#modal-form [name=diskon]').val(response.diskon);
                 $('#modal-form [name=stok]').val(response.stok);
+                $('#modal-form [name=ukuran_produk]').val(response.ukuran_produk);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

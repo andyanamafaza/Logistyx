@@ -16,7 +16,9 @@ class BuatProdukTable extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->increments('id_produk');
             $table->unsignedInteger('id_kategori');
+            $table->unsignedInteger('id_gudang');
             $table->string('nama_produk')->unique();
+            $table->integer('ukuran_produk');
             $table->string('merk')->nullable();
             $table->integer('harga_beli');
             $table->tinyInteger('diskon')->default(0);
