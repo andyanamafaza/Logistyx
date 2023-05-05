@@ -4,6 +4,10 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PembelianDetailController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,4 +49,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/gudang/data', [GudangController::class, 'data'])->name('gudang.data');
     Route::resource('/gudang', GudangController::class);
+    
+    Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
+    Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
+    Route::resource('/pembelian', PembelianController::class)
+            ->except('create');
+
+    Route::get('/pembelian_detail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
+    Route::get('/pembelian_detail/loadform/{diskon}/{total}', [PembelianDetailController::class, 'loadForm'])->name('pembelian_detail.load_form');
+    Route::resource('/pembelian_detail', PembelianDetailController::class)
+            ->except('create', 'show', 'edit');
+
+    Route::get('/penjualan/data', [PenjualanController::class, 'data'])->name('penjualan.data');
+    Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
+    Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
 });
