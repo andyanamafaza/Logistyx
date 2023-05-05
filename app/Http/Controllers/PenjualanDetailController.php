@@ -46,10 +46,10 @@ class PenjualanDetailController extends Controller
             $row = array();
             $row['kode_produk'] = '<span class="label label-success">'. $item->produk['kode_produk'] .'</span';
             $row['nama_produk'] = $item->produk['nama_produk'];
-            $row['harga_jual']  = 'Rp. '. format_uang($item->harga_jual);
+            $row['harga_jual']  = 'Rp. '. uang_indonesia($item->harga_jual);
             $row['jumlah']      = '<input type="number" class="form-control input-sm quantity" data-id="'. $item->id_penjualan_detail .'" value="'. $item->jumlah .'">';
             $row['diskon']      = $item->diskon . '%';
-            $row['subtotal']    = 'Rp. '. format_uang($item->subtotal);
+            $row['subtotal']    = 'Rp. '. uang_indonesia($item->subtotal);
             $row['aksi']        = '<div class="btn-group">
                                     <button onclick="deleteData(`'. route('transaksi.destroy', $item->id_penjualan_detail) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                                 </div>';
@@ -117,12 +117,12 @@ class PenjualanDetailController extends Controller
         $bayar   = $total - ($diskon / 100 * $total);
         $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
         $data    = [
-            'totalrp' => format_uang($total),
+            'totalrp' => uang_indonesia($total),
             'bayar' => $bayar,
-            'bayarrp' => format_uang($bayar),
-            'terbilang' => ucwords(terbilang($bayar). ' Rupiah'),
-            'kembalirp' => format_uang($kembali),
-            'kembali_terbilang' => ucwords(terbilang($kembali). ' Rupiah'),
+            'bayarrp' => uang_indonesia($bayar),
+            'terbilang' => ucwords(baca_angka($bayar). ' Rupiah'),
+            'kembalirp' => uang_indonesia($kembali),
+            'kembali_terbilang' => ucwords(baca_angka($kembali). ' Rupiah'),
         ];
 
         return response()->json($data);
