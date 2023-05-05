@@ -88,7 +88,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('pembelian.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-download"></i>
                         <p>
                             Pembelian
@@ -96,7 +96,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('penjualan.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-upload"></i>
                         <p>
                             Penjualan
