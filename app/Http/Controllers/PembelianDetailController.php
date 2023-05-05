@@ -104,10 +104,10 @@ class PembelianDetailController extends Controller
     {
         $bayar = $total - ($diskon / 100 * $total);
         $data  = [
-            'totalrp' => format_uang($total),
+            'totalrp' => uang_indonesia($total),
             'bayar' => $bayar,
-            'bayarrp' => format_uang($bayar),
-            'terbilang' => ucwords(terbilang($bayar). ' Rupiah')
+            'bayarrp' => uang_indonesia($bayar),
+            'terbilang' => ucwords(baca_angka($bayar). ' Rupiah')
         ];
 
         return response()->json($data);
