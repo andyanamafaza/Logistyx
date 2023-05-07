@@ -79,14 +79,7 @@
 
                 <li class="nav-header">Transaksi</li>
 
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fa fa-money"></i>
-                        <p>
-                            Pengeluaran
-                        </p>
-                    </a>
-                </li>
+                
                 <li class="nav-item">
                     <a href="{{ route('pembelian.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-download"></i>
@@ -104,7 +97,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
                         <i class="nav-icon fa fa-cart-arrow-down"></i>
                         <p>
                             Transaksi Aktif
@@ -112,7 +105,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
                         <i class="nav-icon fa fa-cart-arrow-down"></i>
                         <p>
                             Transaksi Baru
@@ -134,7 +127,7 @@
                 <li class="nav-header">SYSTEM</li>
 
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('user.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             User
@@ -142,7 +135,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ route('setting.index') }}" class="nav-link">
                         <i class="fa fa-cogs"></i>
                         <p>
                             Setting
