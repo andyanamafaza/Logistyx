@@ -76,9 +76,9 @@
                 <td colspan="3">{{ $item->produk->nama_produk }}</td>
             </tr>
             <tr>
-                <td>{{ $item->jumlah }} x {{ format_uang($item->harga_jual) }}</td>
+                <td>{{ $item->jumlah }} x {{ uang_indonesia($item->harga_jual) }}</td>
                 <td></td>
-                <td class="text-right">{{ format_uang($item->jumlah * $item->harga_jual) }}</td>
+                <td class="text-right">{{ uang_indonesia($item->jumlah * $item->harga_jual) }}</td>
             </tr>
         @endforeach
     </table>
@@ -87,27 +87,27 @@
     <table width="100%" style="border: 0;">
         <tr>
             <td>Total Harga:</td>
-            <td class="text-right">{{ format_uang($penjualan->total_harga) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->total_harga) }}</td>
         </tr>
         <tr>
             <td>Total Item:</td>
-            <td class="text-right">{{ format_uang($penjualan->total_item) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->total_item) }}</td>
         </tr>
         <tr>
             <td>Diskon:</td>
-            <td class="text-right">{{ format_uang($penjualan->diskon) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->diskon) }}</td>
         </tr>
         <tr>
             <td>Total Bayar:</td>
-            <td class="text-right">{{ format_uang($penjualan->bayar) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->bayar) }}</td>
         </tr>
         <tr>
             <td>Diterima:</td>
-            <td class="text-right">{{ format_uang($penjualan->diterima) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->diterima) }}</td>
         </tr>
         <tr>
             <td>Kembali:</td>
-            <td class="text-right">{{ format_uang($penjualan->diterima - $penjualan->bayar) }}</td>
+            <td class="text-right">{{ uang_indonesia($penjualan->diterima - $penjualan->bayar) }}</td>
         </tr>
     </table>
 
