@@ -26,7 +26,7 @@
                         alt="User Image"> --}}
 
                     <p>
-                        {{ Auth::user()->name }} - @if (Auth::user()->level == 1)
+                        {{ Auth::user()->name }} - @if (Auth::user()->level == 0)
                             Admin
                         @else
                             Kasir
@@ -36,7 +36,7 @@
                 <!-- Menu Body -->
                 <!-- Menu Footer-->
                 <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="{{ route('user.profil') }}" class="btn btn-default btn-flat">Profile</a>
                     <a href="#" class="btn btn-default btn-flat float-right"
                     onclick="document.getElementById('logout-form').submit()">Sign out</a>
                 </li>
