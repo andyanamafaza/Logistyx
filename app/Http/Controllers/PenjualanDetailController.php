@@ -24,7 +24,7 @@ class PenjualanDetailController extends Controller
 
             return view('penjualan_detail.index', compact('produk',  'diskon', 'id_penjualan', 'penjualan'));
         } else {
-            if (auth()->user()->level == 1) {
+            if (auth()->user()->level == 0) {
                 return redirect()->route('transaksi.baru');
             } else {
                 return redirect()->route('home');
