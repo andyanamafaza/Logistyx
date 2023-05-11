@@ -6,9 +6,9 @@
 
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
@@ -28,7 +28,7 @@
                     <div class="form-group row">
                         <label for="password" class="col-lg-3 col-lg-offset-1 control-label">Password</label>
                         <div class="col-lg-6">
-                            <input type="password" name="password" id="password" class="form-control" 
+                            <input type="password" name="password" id="password" class="form-control"
                             required
                             minlength="6">
                             <span class="help-block with-errors"></span>
@@ -37,7 +37,7 @@
                     <div class="form-group row">
                         <label for="password_confirmation" class="col-lg-3 col-lg-offset-1 control-label">Konfirmasi Password</label>
                         <div class="col-lg-6">
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" 
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"
                                 required
                                 data-match="#password">
                             <span class="help-block with-errors"></span>
