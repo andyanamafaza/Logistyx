@@ -64,8 +64,8 @@ class GudangController extends Controller
      */
 
      public function showDetailProduk(string $id){
-        // $detail = Produk::where('id_gudang', $id)->get();
-        $detail = Produk::leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
+        $detail = Produk::where('id_gudang', $id)
+        ->leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
         ->select('produk.*', 'nama_kategori')
         ->orderBy('kode_produk', 'asc')
         ->get();
