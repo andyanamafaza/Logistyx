@@ -13,7 +13,7 @@
                 <img src="{{ asset('AdminLTE-3/dist/img/user2-160x160') }}.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('user.profil') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    <a href="{{ url('/') }}" class="nav-link active">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -79,7 +79,7 @@
 
                 <li class="nav-header">Transaksi</li>
 
-                
+
                 <li class="nav-item">
                     <a href="{{ route('pembelian.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-download"></i>
@@ -109,17 +109,6 @@
                         <i class="nav-icon fa fa-cart-arrow-down"></i>
                         <p>
                             Transaksi Baru
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-header">Laporan</li>
-
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fa fa-file-pdf-o"></i>
-                        <p>
-                            Laporan
                         </p>
                     </a>
                 </li>

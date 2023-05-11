@@ -53,8 +53,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/supplier', SupplierController::class);
 
     Route::get('/gudang/data', [GudangController::class, 'data'])->name('gudang.data');
+    Route::get('/gudang/showDetailProduk/{id}', [GudangController::class, 'showDetailProduk'])->name('gudang.showDetailProduk');
     Route::resource('/gudang', GudangController::class);
-    
+
     Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
     Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
     Route::resource('/pembelian', PembelianController::class)

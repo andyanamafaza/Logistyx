@@ -19,7 +19,7 @@
                         Tambah</button>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-stiped table-bordered">
+                    <table class="table table-stiped table-bordered table-gudang">
                         <thead>
                             <th width="5%">No</th>
                             <th>Nama</th>
@@ -34,14 +34,15 @@
     </div>
 
     @includeIf('gudang.form')
+    @includeIf('gudang.detail')
 @endsection
 
 @push('scripts')
 <script>
-    let table;
+    let table, table_detail;
 
     $(function () {
-        table = $('.table').DataTable({
+        table = $('.table-gudang').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -55,6 +56,24 @@
                 {data: 'alamat_gudang'},
                 {data: 'ukuran_gudang'},
                 {data: 'aksi', searchable: false, sortable: false},
+            ]
+        });
+
+        $('.table-produk').DataTable();
+        table_detail = $('.table-detail').DataTable({
+            processing: true,
+            bSort: false,
+            dom: 'Brt',
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'kode_produk'},
+                {data: 'nama_produk'},
+                {data: 'nama_kategori'},
+                {data: 'merk'},
+                {data: 'harga_beli'},
+                {data: 'harga_jual'},
+                {data: 'stok'},
+                {data: 'ukuran_produk'},
             ]
         });
 
@@ -102,6 +121,16 @@
                 alert('Tidak dapat menampilkan data');
                 return;
             });
+    }
+
+    function showDetail(url) {
+        $('#modal-detail').modal('show');
+
+        table_detail.ajax.url(url);
+        table_detail.ajax.reload();
+
+        // table1.ajax.url(url);
+        // table1.ajax.reload();
     }
 
     function deleteData(url) {

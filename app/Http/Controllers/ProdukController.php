@@ -50,6 +50,9 @@ class ProdukController extends Controller
             ->addColumn('stok', function ($produk) {
                 return uang_indonesia($produk->stok);
             })
+            ->addColumn('ukuran_produk', function ($produk) {
+                return $produk->ukuran_produk .' m³';
+            })
             ->addColumn('aksi', function ($produk) {
                 return '
                 <div class="btn-group">
