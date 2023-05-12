@@ -134,11 +134,11 @@ class ProdukController extends Controller
     {
         $produk = Produk::find($id);
         $stokLama = $produk->stok;
-        $ukuranProduk = $produk->ukuran;
+        $ukuranProduk = $produk->ukuran_produk;
         $produk->update($request->all());
 
         $selisihStok = $produk->stok - $stokLama;
-        $ukuranBaru = $produk->ukuran;
+        $ukuranBaru = $produk->ukuran_produk;
         $ukuranTotalBaru = $produk->stok * $ukuranBaru;
         $ukuranTotalLama = $stokLama * $ukuranProduk;
         $selisihUkuranTotal = $ukuranTotalBaru - $ukuranTotalLama;
@@ -147,7 +147,7 @@ class ProdukController extends Controller
             $gudang = Gudang::find($produk->id_gudang);
             if($gudang->ukuran_gudang < $selisihUkuranTotal) {
                 $produk->stok = $stokLama;
-                $produk->ukuran = $ukuranProduk;
+                $produk->ukuran_produk = $ukuranProduk;
                 $produk->save();
                 return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
             }else{
