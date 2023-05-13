@@ -89,10 +89,10 @@ class ProdukController extends Controller
         $produk = Produk::create($request->all());
         $ukuran_total_produk = $produk->stok * $produk->ukuran_produk;
         $gudang = Gudang::find($produk->id_gudang);
-        if($gudang->ukuran_gudang < $ukuran_total_produk){
+        if($gudang->ukuran_gudang < $ukuran_total_produk) {
             $produk->delete();
             return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
-        }else{
+        } else {
             $gudang->ukuran_gudang -= $ukuran_total_produk;
             $gudang->save();
             return redirect('produk')->with('success', 'Data berhasil ditambahkan');
@@ -133,34 +133,45 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::find($id);
+        $gudangLama = Gudang::find($produk->id_gudang);
         $stokLama = $produk->stok;
         $ukuranProduk = $produk->ukuran_produk;
         $produk->update($request->all());
 
+        $gudangBaru = Gudang::find($produk->id_gudang);
         $selisihStok = $produk->stok - $stokLama;
         $ukuranBaru = $produk->ukuran_produk;
         $ukuranTotalBaru = $produk->stok * $ukuranBaru;
         $ukuranTotalLama = $stokLama * $ukuranProduk;
         $selisihUkuranTotal = $ukuranTotalBaru - $ukuranTotalLama;
 
-        if ($selisihUkuranTotal > 0) {
-            $gudang = Gudang::find($produk->id_gudang);
-            if($gudang->ukuran_gudang < $selisihUkuranTotal) {
-                $produk->stok = $stokLama;
-                $produk->ukuran_produk = $ukuranProduk;
-                $produk->save();
-                return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
-            }else{
+        if($gudangLama->id_gudang == $gudangBaru->id_gudang) {
+            if ($selisihUkuranTotal > 0) {
+                $gudang = Gudang::find($produk->id_gudang);
+                if($gudang->ukuran_gudang < $selisihUkuranTotal) {
+                    $produk->stok = $stokLama;
+                    $produk->ukuran_produk = $ukuranProduk;
+                    $produk->save();
+                    return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
+                } else {
+                    $gudang->ukuran_gudang -= $selisihUkuranTotal;
+                    $gudang->save();
+                }
+            } elseif ($selisihUkuranTotal < 0) {
+                $gudang = Gudang::find($produk->id_gudang);
                 $gudang->ukuran_gudang -= $selisihUkuranTotal;
                 $gudang->save();
             }
-        } else if ($selisihUkuranTotal < 0) {
-            $gudang = Gudang::find($produk->id_gudang);
-            $gudang->ukuran_gudang -= $selisihUkuranTotal;
-            $gudang->save();
+
+            return redirect('produk')->with('success', 'Data berhasil diubah');
+        } else {
+            $gudangLama->ukuran_gudang += $ukuranTotalLama;
+            $gudangLama->save();
+            $gudangBaru->ukuran_gudang -= $ukuranTotalBaru;
+            $gudangBaru->save();
+            return redirect('produk')->with('success', 'Data berhasil diubah');
         }
 
-        return redirect('produk')->with('success', 'Data berhasil diubah');
     }
 
 

@@ -29,8 +29,8 @@ return new class extends Migration
     {
         Schema::table('produk', function (Blueprint $table) {
             //
-            $table->dropForeign('produk_id_gudang_foreign');
             $table->integer('id_gudang')->change();
+            $table->dropForeign('produk_id_gudang_foreign');
         });
     }
 };
