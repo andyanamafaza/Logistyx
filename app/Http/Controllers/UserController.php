@@ -97,11 +97,11 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->has('password') && $request->password != "") 
+        if ($request->has('password') && $request->password != "")
             $user->password = bcrypt($request->password);
         $user->update();
 
-        return response()->json('Data berhasil disimpan', 200);
+        return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
 
     /**
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function updateProfil(Request $request)
     {
         $user = auth()->user();
-        
+
         $user->name = $request->name;
         if ($request->has('password') && $request->password != "") {
             if (Hash::check($request->old_password, $user->password)) {
@@ -150,6 +150,6 @@ class UserController extends Controller
 
         $user->update();
 
-        return response()->json($user, 200);
+        return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
 }

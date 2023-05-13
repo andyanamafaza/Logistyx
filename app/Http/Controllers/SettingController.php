@@ -44,6 +44,6 @@ class SettingController extends Controller
 
         $setting->update();
 
-        return response()->json('Data berhasil disimpan', 200);
+        return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui');
     }
 }
