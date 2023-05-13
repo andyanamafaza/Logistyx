@@ -78,6 +78,7 @@ class PembelianDetailController extends Controller
         $detail->id_produk = $produk->id_produk;
         $detail->harga_beli = $produk->harga_beli;
         $detail->jumlah = 1;
+        $detail->jumlah_awal = 0;
         $detail->subtotal = $produk->harga_beli;
         $detail->save();
 
@@ -87,6 +88,7 @@ class PembelianDetailController extends Controller
     public function update(Request $request, $id)
     {
         $detail = PembelianDetail::find($id);
+        $detail->jumlah_awal = $detail->jumlah;
         $detail->jumlah = $request->jumlah;
         $detail->subtotal = $detail->harga_beli * $request->jumlah;
         $detail->update();

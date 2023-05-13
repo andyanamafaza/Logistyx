@@ -7,6 +7,7 @@ use App\Models\Pembelian;
 use App\Models\PembelianDetail;
 use App\Models\Produk;
 use App\Models\Supplier;
+use App\Models\Gudang;
 
 class PembelianController extends Controller
 {
@@ -80,14 +81,50 @@ class PembelianController extends Controller
         $pembelian->update();
 
         $detail = PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->get();
+        $ukuranGudangCukup = true;
+
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
-            $produk->stok += $item->jumlah;
-            $produk->update();
+            $gudang = Gudang::find($produk->id_gudang);
+            // $selisih_jumlah = $detail->jumlah_awal - $item->jumlah;
+            $selisih_jumlah =  $item->jumlah- $item->jumlah_awal;
+
+            if ($selisih_jumlah > 0) {
+                $tambahan_stok = $selisih_jumlah;
+                $produk->stok += $tambahan_stok;
+                $produk->update();
+
+                $ukuran_tambahan_gudang = $tambahan_stok * $produk->ukuran_produk;
+                if ($gudang->ukuran_gudang < $ukuran_tambahan_gudang) {
+                    $ukuranGudangCukup = false;
+                    $produk->stok -= $tambahan_stok;
+                    $produk->update();
+                    break;
+                } else {
+                    $gudang->ukuran_gudang -= $ukuran_tambahan_gudang;
+                    $gudang->update();
+                }
+            } elseif ($selisih_jumlah < 0) {
+                $pengurangan_stok = abs($selisih_jumlah);
+                $produk->stok -= $pengurangan_stok;
+                $produk->update();
+
+                $ukuran_pengurangan_gudang = $pengurangan_stok * $produk->ukuran_produk;
+                $gudang->ukuran_gudang += $ukuran_pengurangan_gudang;
+                $gudang->update();
+            }
         }
 
-        return redirect()->route('pembelian.index');
+        if (!$ukuranGudangCukup) {
+            PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->delete();
+            $pembelian->delete();
+            return redirect()->route('pembelian_detail.index')
+                ->with('error', 'Ukuran gudang tidak mencukupi. Silakan masukkan kembali jumlah item yang diinginkan.');
+        }
+
+        return redirect()->route('pembelian.index')->with('success', 'Data berhasil ditambahkan');
     }
+
 
     public function show($id)
     {
@@ -121,6 +158,10 @@ class PembelianController extends Controller
         $detail    = PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->get();
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
+            $gudang = Gudang::find($produk->id_gudang);
+            $ukuran_total_produk = $item->jumlah * $produk->ukuran_produk;
+            $gudang->ukuran_gudang += $ukuran_total_produk;
+            $gudang->update();
             if ($produk) {
                 $produk->stok -= $item->jumlah;
                 $produk->update();
