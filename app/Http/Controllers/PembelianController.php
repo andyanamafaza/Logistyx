@@ -86,8 +86,7 @@ class PembelianController extends Controller
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
             $gudang = Gudang::find($produk->id_gudang);
-            // $selisih_jumlah = $detail->jumlah_awal - $item->jumlah;
-            $selisih_jumlah =  $item->jumlah- $item->jumlah_awal;
+            $selisih_jumlah =  $item->jumlah - $item->jumlah_awal;
 
             if ($selisih_jumlah > 0) {
                 $tambahan_stok = $selisih_jumlah;
