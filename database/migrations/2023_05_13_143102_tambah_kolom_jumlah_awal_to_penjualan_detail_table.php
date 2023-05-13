@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pembelian_detail', function (Blueprint $table) {
+        Schema::table('penjualan_detail', function (Blueprint $table) {
             $table->integer('jumlah_awal')->nullable()->after('jumlah');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pembelian_detail', function (Blueprint $table) {
+        Schema::table('penjualan_detail', function (Blueprint $table) {
             $table->dropColumn('jumlah_awal');
         });
     }

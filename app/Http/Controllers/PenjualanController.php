@@ -6,6 +6,7 @@ use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
 use App\Models\Setting;
+use App\Models\Gudang;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -79,17 +80,41 @@ class PenjualanController extends Controller
         $penjualan->update();
 
         $detail = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
-        foreach ($detail as $item) {
-            $item->diskon = $request->diskon;
-            $item->update();
 
+        foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
-            $produk->stok -= $item->jumlah;
-            $produk->update();
+            $gudang = Gudang::find($produk->id_gudang);
+            // $selisih_jumlah = $item->jumlah - $item->jumlah_awal;
+            $selisih_jumlah = $item->jumlah_awal - $item->jumlah ;
+
+            if ($selisih_jumlah > 0) {
+                $tambahan_stok = $selisih_jumlah;
+                $produk->stok += $tambahan_stok;
+                $produk->update();
+
+                $ukuran_tambahan_gudang = $tambahan_stok * $produk->ukuran_produk;
+                $gudang->ukuran_gudang -= $ukuran_tambahan_gudang;
+                $gudang->update();
+            } elseif ($selisih_jumlah < 0) {
+                $pengurangan_stok = abs($selisih_jumlah);
+                $produk->stok -= $pengurangan_stok;
+                $produk->update();
+
+                $ukuran_pengurangan_gudang = $pengurangan_stok * $produk->ukuran_produk;
+                $gudang->ukuran_gudang += $ukuran_pengurangan_gudang;
+                $gudang->update();
+            }
+
+            if ($produk->stok < 0 || $gudang->ukuran_gudang < 0) {
+                $penjualan->delete();
+                return redirect()->route('penjualan_detail.index')
+                    ->with('error', 'Jumlah stok produk atau ukuran gudang tidak mencukupi. Silakan ubah jumlah item yang diinginkan.');
+            }
         }
 
         return redirect()->route('transaksi.selesai');
     }
+
 
     public function show($id)
     {
@@ -123,6 +148,10 @@ class PenjualanController extends Controller
         $detail    = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
+            $gudang = Gudang::find($produk->id_gudang);
+            $ukuran_total_produk = $item->jumlah * $produk->ukuran_produk;
+            $gudang->ukuran_gudang -= $ukuran_total_produk;
+            $gudang->update();
             if ($produk) {
                 $produk->stok += $item->jumlah;
                 $produk->update();
@@ -153,7 +182,7 @@ class PenjualanController extends Controller
         $detail = PenjualanDetail::with('produk')
             ->where('id_penjualan', session('id_penjualan'))
             ->get();
-        
+
         return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail'));
     }
 
@@ -169,7 +198,7 @@ class PenjualanController extends Controller
             ->get();
 
         $pdf = PDF::loadView('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
-        $pdf->setPaper(0,0,609,440, 'potrait');
+        $pdf->setPaper(0, 0, 609, 440, 'potrait');
         return $pdf->stream('Transaksi-'. date('Y-m-d-his') .'.pdf');
     }
 }

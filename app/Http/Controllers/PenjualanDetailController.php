@@ -14,13 +14,13 @@ class PenjualanDetailController extends Controller
     public function index()
     {
         $produk = Produk::orderBy('nama_produk')->get();
-        
+
         $diskon = Setting::first()->diskon ?? 0;
 
         // Cek apakah ada transaksi yang sedang berjalan
         if ($id_penjualan = session('id_penjualan')) {
             $penjualan = Penjualan::find($id_penjualan);
-            
+
 
             return view('penjualan_detail.index', compact('produk',  'diskon', 'id_penjualan', 'penjualan'));
         } else {
@@ -60,8 +60,8 @@ class PenjualanDetailController extends Controller
         }
         $data[] = [
             'kode_produk' => '
-                <div class="total hide">'. $total .'</div>
-                <div class="total_item hide">'. $total_item .'</div>',
+            <div class="total" style="display: none;">'. $total .'</div>
+            <div class="total_item" style="display: none;">'. $total_item .'</div>',
             'nama_produk' => '',
             'harga_jual'  => '',
             'jumlah'      => '',
@@ -89,6 +89,7 @@ class PenjualanDetailController extends Controller
         $detail->id_produk = $produk->id_produk;
         $detail->harga_jual = $produk->harga_jual;
         $detail->jumlah = 1;
+        $detail->jumlah_awal = 0;
         $detail->diskon = $produk->diskon;
         $detail->subtotal = $produk->harga_jual - ($produk->diskon / 100 * $produk->harga_jual);;
         $detail->save();
@@ -99,6 +100,7 @@ class PenjualanDetailController extends Controller
     public function update(Request $request, $id)
     {
         $detail = PenjualanDetail::find($id);
+        $detail->jumlah_awal = $detail->jumlah;
         $detail->jumlah = $request->jumlah;
         $detail->subtotal = $detail->harga_jual * $request->jumlah - (($detail->diskon * $request->jumlah) / 100 * $detail->harga_jual);;
         $detail->update();
