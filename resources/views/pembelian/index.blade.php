@@ -13,10 +13,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
-            <div class="box-header with-border">
-                <button onclick="addForm()" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Transaksi Baru</button>
+            <div class="box-header with-border pb-1">
+                <button onclick="addForm()" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Transaksi Baru</button>
                 @empty(! session('id_pembelian'))
-                <a href="{{ route('pembelian_detail.index') }}" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i> Transaksi Aktif</a>
+                <a href="{{ route('pembelian_detail.index') }}" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Transaksi Aktif</a>
                 @endempty
             </div>
             <div class="box-body table-responsive">

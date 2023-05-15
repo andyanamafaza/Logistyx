@@ -138,54 +138,36 @@ Transaksi Pembelian
 <script>
     let table, table2;
 
-    $(function() {
+    $(function () {
         $('body').addClass('sidebar-collapse');
 
         table = $('.table-pembelian').DataTable({
-                responsive: true
-                , processing: true
-                , serverSide: true
-                , autoWidth: false
-                , ajax: {
-                    url: '{{ route('
-                    pembelian_detail.data ', $id_pembelian) }}'
-                , }
-                , columns: [{
-                        data: 'DT_RowIndex'
-                        , searchable: false
-                        , sortable: false
-                    }
-                    , {
-                        data: 'kode_produk'
-                    }
-                    , {
-                        data: 'nama_produk'
-                    }
-                    , {
-                        data: 'harga_beli'
-                    }
-                    , {
-                        data: 'jumlah'
-                    }
-                    , {
-                        data: 'subtotal'
-                    }
-                    , {
-                        data: 'aksi'
-                        , searchable: false
-                        , sortable: false
-                    }
-                , ]
-                , dom: 'Brt'
-                , bSort: false
-                , paginate: false
-            })
-            .on('draw.dt', function() {
-                loadForm($('#diskon').val());
-            });
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('pembelian_detail.data', $id_pembelian) }}',
+            },
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'kode_produk'},
+                {data: 'nama_produk'},
+                {data: 'harga_beli'},
+                {data: 'jumlah'},
+                {data: 'subtotal'},
+                {data: 'aksi', searchable: false, sortable: false},
+            ],
+            dom: 'Brt',
+            bSort: false,
+            paginate: false
+        })
+        .on('draw.dt', function () {
+            loadForm($('#diskon').val());
+        });
         table2 = $('.table-produk').DataTable();
 
-        $(document).on('input', '.quantity', function() {
+        $(document).on('input', '.quantity', function () {
             let id = $(this).data('id');
             let jumlah = parseInt($(this).val());
 
@@ -201,12 +183,12 @@ Transaksi Pembelian
             }
 
             $.post(`{{ url('/pembelian_detail') }}/${id}`, {
-                    '_token': $('[name=csrf-token]').attr('content')
-                    , '_method': 'put'
-                    , 'jumlah': jumlah
+                    '_token': $('[name=csrf-token]').attr('content'),
+                    '_method': 'put',
+                    'jumlah': jumlah
                 })
                 .done(response => {
-                    $(this).on('mouseout', function() {
+                    $(this).on('mouseout', function () {
                         table.ajax.reload(() => loadForm($('#diskon').val()));
                     });
                 })
@@ -216,7 +198,7 @@ Transaksi Pembelian
                 });
         });
 
-        $(document).on('input', '#diskon', function() {
+        $(document).on('input', '#diskon', function () {
             if ($(this).val() == "") {
                 $(this).val(0).select();
             }
@@ -224,7 +206,7 @@ Transaksi Pembelian
             loadForm($(this).val());
         });
 
-        $('.btn-simpan').on('click', function() {
+        $('.btn-simpan').on('click', function () {
             $('.form-pembelian').submit();
         });
     });
@@ -245,8 +227,7 @@ Transaksi Pembelian
     }
 
     function tambahProduk() {
-        $.post('{{ route('
-                pembelian_detail.store ') }}', $('.form-produk').serialize())
+        $.post('{{ route('pembelian_detail.store') }}', $('.form-produk').serialize())
             .done(response => {
                 $('#kode_produk').focus();
                 table.ajax.reload(() => loadForm($('#diskon').val()));
@@ -260,8 +241,8 @@ Transaksi Pembelian
     function deleteData(url) {
         if (confirm('Yakin ingin menghapus data terpilih?')) {
             $.post(url, {
-                    '_token': $('[name=csrf-token]').attr('content')
-                    , '_method': 'delete'
+                    '_token': $('[name=csrf-token]').attr('content'),
+                    '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload(() => loadForm($('#diskon').val()));
@@ -279,10 +260,10 @@ Transaksi Pembelian
 
         $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
             .done(response => {
-                $('#totalrp').val('Rp. ' + response.totalrp);
-                $('#bayarrp').val('Rp. ' + response.bayarrp);
+                $('#totalrp').val('Rp. '+ response.totalrp);
+                $('#bayarrp').val('Rp. '+ response.bayarrp);
                 $('#bayar').val(response.bayar);
-                $('.tampil-bayar').text('Rp. ' + response.bayarrp);
+                $('.tampil-bayar').text('Rp. '+ response.bayarrp);
                 $('.tampil-terbilang').text(response.terbilang);
             })
             .fail(errors => {
@@ -290,6 +271,5 @@ Transaksi Pembelian
                 return;
             })
     }
-
 </script>
 @endpush

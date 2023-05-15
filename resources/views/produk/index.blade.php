@@ -13,10 +13,10 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
-            <div class="box-header with-border">
-                <div class="btn-group">
-                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
-                    <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+            <div class="box-header with-border pb-1">
+                <div class="box">
+                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Tambah Produk </button>
+                    <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Hapus Produk </button>
                 </div>
             </div>
             <div class="box-body table-responsive">

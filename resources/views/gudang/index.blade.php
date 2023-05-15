@@ -14,9 +14,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="box">
-                <div class="box-header with-border">
-                    <button onclick="addForm('{{ route('gudang.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i>
-                        Tambah</button>
+
+                <div class="box-header with-border pb-2">
+                    <button onclick="addForm('{{ route('gudang.store') }}')" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>
+                        Tambah Gudang</button>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered table-gudang">
@@ -125,12 +126,8 @@
 
     function showDetail(url) {
         $('#modal-detail').modal('show');
-
         table_detail.ajax.url(url);
         table_detail.ajax.reload();
-
-        // table1.ajax.url(url);
-        // table1.ajax.reload();
     }
 
     function deleteData(url) {
