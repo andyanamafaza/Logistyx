@@ -14,7 +14,21 @@
 <div class="row">
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-aqua">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>{{ $gudang }}</h3>
+
+                <p>Total Gudang</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-warehouse"></i>
+            </div>
+            <a href="{{ route('gudang.index') }}" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
             <div class="inner">
                 <h3>{{ $kategori }}</h3>
 
@@ -29,7 +43,7 @@
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-green">
+        <div class="small-box bg-blue">
             <div class="inner">
                 <h3>{{ $produk }}</h3>
 
@@ -41,11 +55,11 @@
             <a href="{{ route('produk.index') }}" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-  
+
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-red">
+        <div class="small-box bg-yellow">
             <div class="inner">
                 <h3>{{ $supplier }}</h3>
 
@@ -90,7 +104,7 @@
 
 @push('scripts')
 <!-- ChartJS -->
-<script src="{{ asset('AdminLTE-2/bower_components/chart.js/Chart.js') }}"></script>
+<script src="{{ asset('AdminLTE-3/plugins/chart.js/Chart.js') }}"></script>
 <script>
 $(function() {
     // Get context with jQuery - using jQuery's .get() method.

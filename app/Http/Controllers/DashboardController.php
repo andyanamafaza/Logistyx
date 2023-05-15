@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
-
 use App\Models\Pembelian;
-
 use App\Models\Penjualan;
 use App\Models\Produk;
 use App\Models\Supplier;
+use App\Models\Gudang;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,7 +17,8 @@ class DashboardController extends Controller
         $kategori = Kategori::count();
         $produk = Produk::count();
         $supplier = Supplier::count();
-        
+        $gudang = Gudang::count();
+
 
         $tanggal_awal = date('Y-m-01');
         $tanggal_akhir = date('Y-m-d');
@@ -31,7 +31,7 @@ class DashboardController extends Controller
 
             $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
             $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
-            
+
 
             $pendapatan = $total_penjualan - $total_pembelian;
             $data_pendapatan[] += $pendapatan;
@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $tanggal_awal = date('Y-m-01');
 
         if (auth()->user()->level == 0) {
-            return view('admin.dashboard', compact('kategori', 'produk', 'supplier',  'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
+            return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'gudang',  'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
         } else {
             return view('kasir.dashboard');
         }
