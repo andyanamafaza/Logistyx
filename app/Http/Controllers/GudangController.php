@@ -18,25 +18,44 @@ class GudangController extends Controller
         return view('gudang.index');
     }
 
-    public function data(){
+    public function data()
+    {
         $gudang = Gudang::orderBy('id_gudang', 'desc')->get();
 
         return datatables()
             ->of($gudang)
             ->addIndexColumn()
             ->addColumn('ukuran_gudang', function ($gudang) {
-                return $gudang->ukuran_gudang .' m³';
+                return $gudang->ukuran_awal .' m³';
             })
+            ->addColumn('ukuran_awal', function ($gudang) {
+                $persentase = ($gudang->ukuran_awal - $gudang->ukuran_gudang) / $gudang->ukuran_awal * 100;
+                $color = 'success';
+
+                if ($persentase > 50) {
+                    $color = 'warning';
+                }
+
+                if ($persentase >= 90) {
+                    $color = 'danger';
+                }
+
+                $persentase = round($persentase, 2);
+
+                $html = '<span class="badge bg-' . $color . '">' . $persentase . '%</span>';
+                return $html;
+            })
+
             ->addColumn('aksi', function ($gudang) {
                 return '
                 <div class="btn-group">
-                <button type="button" onclick="showDetail(`'. route('gudang.showDetailProduk', $gudang->id_gudang) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-eye"></i></button>
+                    <button type="button" onclick="showDetail(`'. route('gudang.showDetailProduk', $gudang->id_gudang) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-eye"></i></button>
                     <button type="button" onclick="editForm(`'. route('gudang.update', $gudang->id_gudang) .'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
                     <button type="button" onclick="deleteData(`'. route('gudang.destroy', $gudang->id_gudang) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi', 'ukuran_awal'])
             ->make(true);
     }
 
@@ -55,6 +74,8 @@ class GudangController extends Controller
     {
         //
         $gudang = Gudang::create($request->all());
+        $gudang->ukuran_awal = $request->ukuran_gudang;
+        $gudang->save();
 
         return redirect()->route('gudang.index')->with('success', 'Data berhasil disimpan!');
     }
@@ -63,33 +84,34 @@ class GudangController extends Controller
      * Display the specified resource.
      */
 
-     public function showDetailProduk(string $id){
-        $detail = Produk::where('id_gudang', $id)
-        ->leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
-        ->select('produk.*', 'nama_kategori')
-        ->orderBy('kode_produk', 'asc')
-        ->get();
+     public function showDetailProduk(string $id)
+     {
+         $detail = Produk::where('id_gudang', $id)
+         ->leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
+         ->select('produk.*', 'nama_kategori')
+         ->orderBy('kode_produk', 'asc')
+         ->get();
 
-        return datatables()
-            ->of($detail)
-            ->addIndexColumn()
-            ->addColumn('kode_produk', function ($detail) {
-                return '<span class="label label-success">'. $detail->kode_produk .'</span>';
-            })
-            ->addColumn('harga_beli', function ($detail) {
-                return uang_indonesia($detail->harga_beli);
-            })
-            ->addColumn('harga_jual', function ($detail) {
-                return uang_indonesia($detail->harga_jual);
-            })
-            ->addColumn('stok', function ($detail) {
-                return uang_indonesia($detail->stok);
-            })
-            ->addColumn('ukuran_produk', function ($detail) {
-                return $detail->ukuran_produk .' m³';
-            })
-            ->rawColumns(['kode_produk'])
-            ->make(true);
+         return datatables()
+             ->of($detail)
+             ->addIndexColumn()
+             ->addColumn('kode_produk', function ($detail) {
+                 return '<span class="label label-success">'. $detail->kode_produk .'</span>';
+             })
+             ->addColumn('harga_beli', function ($detail) {
+                 return uang_indonesia($detail->harga_beli);
+             })
+             ->addColumn('harga_jual', function ($detail) {
+                 return uang_indonesia($detail->harga_jual);
+             })
+             ->addColumn('stok', function ($detail) {
+                 return uang_indonesia($detail->stok);
+             })
+             ->addColumn('ukuran_produk', function ($detail) {
+                 return $detail->ukuran_produk .' m³';
+             })
+             ->rawColumns(['kode_produk'])
+             ->make(true);
      }
 
     public function show(string $id)

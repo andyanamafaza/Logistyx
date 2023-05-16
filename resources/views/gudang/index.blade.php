@@ -26,6 +26,7 @@
                             <th>Nama</th>
                             <th>Alamat</th>
                             <th>Ukuran</th>
+                            <th width="10%">Status</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
@@ -56,6 +57,7 @@
                 {data: 'nama_gudang'},
                 {data: 'alamat_gudang'},
                 {data: 'ukuran_gudang'},
+                {data: 'ukuran_awal'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
         });

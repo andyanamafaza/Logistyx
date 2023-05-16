@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet"
         href="{{ asset('AdminLTE-3/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
     <!-- Font Awesome -->
@@ -76,11 +77,11 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">{{ Config::get('app.name') }}</a>.</strong>
-            All rights reserved.
-            {{-- <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
-            </div> --}}
+            <strong>Presented <a href="{{ route('dashboard') }}">{{ Config::get('app.name') }}</a>.</strong>
+            Created by Klaten
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 0.1.15
+            </div>
         </footer>
 
         <!-- Control Sidebar -->
@@ -132,7 +133,12 @@
     <script src="{{ asset('AdminLTE-3/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('js/bootstrapValidator.min.js') }}"></script>
-
+    <script>
+        function preview(selector, temporaryFile, width = 200)  {
+            $(selector).empty();
+            $(selector).append(`<img src="${window.URL.createObjectURL(temporaryFile)}" width="${width}">`);
+        }
+    </script>
     @stack('scripts')
 
 </body>
