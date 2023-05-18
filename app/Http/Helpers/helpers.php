@@ -1,10 +1,12 @@
 <?php
 
-function uang_indonesia($angka) {
+function uang_indonesia($angka)
+{
     return number_format($angka, 0, ',', '.');
 }
 
-function baca_angka($angka) {
+function baca_angka($angka)
+{
     $angka = abs($angka);
     $baca  = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
     $baca_angka = '';
@@ -30,17 +32,21 @@ function baca_angka($angka) {
     return trim($baca_angka);
 }
 
-function tambah_nol_didepan($id_kategori, $id_produk) {
+function tambah_nol_didepan($id_gudang, $id_kategori, $id_produk)
+{
+    $hex_id_gudang = dechex($id_gudang);
     $hex_id_kategori = dechex($id_kategori);
     $hex_id_produk = dechex($id_produk);
 
+    $hex_id_gudang = str_pad($hex_id_gudang, 2, "0", STR_PAD_LEFT);
     $hex_id_kategori = str_pad($hex_id_kategori, 2, "0", STR_PAD_LEFT);
     $hex_id_produk = str_pad($hex_id_produk, 2, "0", STR_PAD_LEFT);
 
-    $product_code = "P" . $hex_id_kategori . $hex_id_produk;
+    $product_code = "G" . $hex_id_gudang . "P" . $hex_id_kategori . $hex_id_produk;
 
     return $product_code;
-  }
+}
+
 
 function tanggal_indonesia($tgl, $tampil_hari = true)
 {
@@ -66,3 +72,9 @@ function tanggal_indonesia($tgl, $tampil_hari = true)
 
     return $text;
 }
+
+function formatRupiah($angka)
+    {
+        $rupiah = number_format($angka, 0, ',', '.');
+        return 'Rp' . $rupiah;
+    }
