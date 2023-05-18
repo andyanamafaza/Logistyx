@@ -93,7 +93,8 @@
         });
 
         $('[name=select_all]').on('click', function () {
-            $(':checkbox').prop('checked', this.checked);
+            console.log('Checkbox clicked');
+            $(':checkbox').prop('checked', $(this).prop('checked'));
         });
     });
 
@@ -135,52 +136,102 @@
     }
 
     function deleteData(url) {
-        if (confirm('Yakin ingin menghapus data terpilih?')) {
-            $.post(url, {
+        Swal.fire({
+            icon: 'question',
+            title: 'Konfirmasi',
+            text: 'Yakin ingin menghapus data terpilih?',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Data produk berhasil dihapus.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
-                    return;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Tidak dapat menghapus data produk.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 });
-        }
+            }
+        });
     }
 
     function deleteSelected(url) {
-        if ($('input:checked').length > 1) {
-            if (confirm('Yakin ingin menghapus data terpilih?')) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Konfirmasi',
+            text: 'Yakin ingin menghapus data terpilih?',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.post(url, $('.form-produk').serialize())
-                    .done((response) => {
-                        table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menghapus data');
-                        return;
+                .done((response) => {
+                    table.ajax.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Data produk berhasil dihapus.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
                     });
+                })
+                .fail((errors) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Tidak dapat menghapus data produk.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                });
             }
-        } else {
-            alert('Pilih data yang akan dihapus');
-            return;
-        }
+        });
     }
 
-    function cetakBarcode(url) {
-        if ($('input:checked').length < 1) {
-            alert('Pilih data yang akan dicetak');
-            return;
-        } else if ($('input:checked').length < 3) {
-            alert('Pilih minimal 3 data untuk dicetak');
-            return;
-        } else {
-            $('.form-produk')
-                .attr('target', '_blank')
-                .attr('action', url)
-                .submit();
-        }
-    }
+
+
+    @if(session('status'))
+        let status = "{{ session('status') }}";
+        let message = "{{ session('message') }}";
+        let judul = "{{ session('judul') }}";
+
+        Swal.fire({
+            icon: status,
+            title: judul,
+            text: message,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    @endif
 </script>
 @endpush

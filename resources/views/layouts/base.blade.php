@@ -37,6 +37,7 @@
     <link rel="stylesheet"
         href="{{ asset('AdminLTE-3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE-3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
 
 </head>
@@ -94,6 +95,7 @@
 
     <!-- jQuery -->
     <script src="{{ asset('AdminLTE-3/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE-3/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('AdminLTE-3/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -101,6 +103,7 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
+    <script src="{{ asset('AdminLTE-3/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('AdminLTE-3/plugins/chart.js/Chart.min.js') }}"></script>

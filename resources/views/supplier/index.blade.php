@@ -103,19 +103,61 @@
     }
 
     function deleteData(url) {
-        if (confirm('Yakin ingin menghapus data terpilih?')) {
-            $.post(url, {
+        Swal.fire({
+            icon: 'question',
+            title: 'Konfirmasi',
+            text: 'Yakin ingin menghapus data terpilih?',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: 'Data gudang berhasil dihapus.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
-                    return;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Tidak dapat menghapus data gudang.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 });
-        }
+            }
+        });
     }
+
+    @if(session('status'))
+        let status = "{{ session('status') }}";
+        let message = "{{ session('message') }}";
+        let judul = "{{ session('judul') }}";
+
+        Swal.fire({
+            icon: status,
+            title: judul,
+            text: message,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    @endif
 </script>
 @endpush
