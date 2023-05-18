@@ -55,10 +55,14 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->level = 2;
-        $user->foto = '/img/user.jpg';
+        $user->foto = '/img/user.png';
         $user->save();
 
-        return response()->json('Data berhasil disimpan', 200);
+        return redirect()->route('user.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'User berhasil ditambahkan.'
+        ]);
     }
 
     /**
@@ -97,11 +101,16 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->has('password') && $request->password != "")
+        if ($request->has('password') && $request->password != "") {
             $user->password = bcrypt($request->password);
+        }
         $user->update();
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('user.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'User berhasil diperbarui.'
+        ]);
     }
 
     /**
@@ -150,6 +159,10 @@ class UserController extends Controller
 
         $user->update();
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui');
+        return redirect()->back()->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Profil berhasil diperbarui.'
+        ]);
     }
 }

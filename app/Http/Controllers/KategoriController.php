@@ -58,7 +58,11 @@ class KategoriController extends Controller
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->save();
 
-        return redirect('kategori')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('kategori.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Data kategori berhasil ditambahkan'
+        ]);
     }
 
     /**
@@ -98,7 +102,11 @@ class KategoriController extends Controller
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->update();
 
-        return redirect('kategori')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('kategori.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Data kategori berhasil diubah'
+        ]);
     }
 
     /**

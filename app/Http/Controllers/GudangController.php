@@ -76,8 +76,11 @@ class GudangController extends Controller
         $gudang = Gudang::create($request->all());
         $gudang->ukuran_awal = $request->ukuran_gudang;
         $gudang->save();
-
-        return redirect()->route('gudang.index')->with('success', 'Data berhasil disimpan!');
+        return redirect()->route('gudang.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Gudang berhasil ditambahkan.'
+        ]);
     }
 
     /**
@@ -96,7 +99,7 @@ class GudangController extends Controller
              ->of($detail)
              ->addIndexColumn()
              ->addColumn('kode_produk', function ($detail) {
-                 return '<span class="label label-success">'. $detail->kode_produk .'</span>';
+                 return '<span class="badge bg-info">'. $detail->kode_produk .'</span>';
              })
              ->addColumn('harga_beli', function ($detail) {
                  return uang_indonesia($detail->harga_beli);
@@ -135,10 +138,15 @@ class GudangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $gudang = Gudang::find($id)->update($request->all());
-
-        return redirect()->route('gudang.index')->with('success', 'Data berhasil diubah!');
+        $gudang1 = Gudang::find($id);
+        $gudang1->ukuran_awal = $gudang1->ukuran_gudang;
+        $gudang1->save();
+        return redirect()->route('gudang.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Data gudang berhasil diperbarui.'
+        ]);
     }
 
     /**

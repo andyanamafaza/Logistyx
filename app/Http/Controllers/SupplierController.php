@@ -50,8 +50,11 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $supplier = Supplier::create($request->all());
-
-        return redirect('supplier')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('supplier.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Data supplier berhasil ditambahkan.'
+        ]);
     }
 
     /**
@@ -89,7 +92,11 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::find($id)->update($request->all());
 
-        return redirect('supplier')->with('success', 'Data berhasil diubah');
+        return redirect()->route('supplier.index')->with([
+            'status' => 'success',
+            'judul' => 'Sukses!',
+            'message' => 'Data supplier berhasil diubah.'
+        ]);
     }
 
     /**

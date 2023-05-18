@@ -39,7 +39,8 @@ class ProdukController extends Controller
                 ';
             })
             ->addColumn('kode_produk', function ($produk) {
-                return '<span class="label label-success">'. $produk->kode_produk .'</span>';
+                return '<span class="badge bg-info">'. $produk->kode_produk .'</span>';
+                // return '<span class="label label-success">'. $produk->kode_produk .'</span>';
             })
             ->addColumn('harga_beli', function ($produk) {
                 return uang_indonesia($produk->harga_beli);
@@ -85,17 +86,25 @@ class ProdukController extends Controller
     {
 
         $produk = Produk::latest()->first() ?? new Produk();
-        $request['kode_produk'] = tambah_nol_didepan((int)$produk->id_kategori, (int)$produk->id_produk);
+        $request['kode_produk'] = tambah_nol_didepan((int)$produk->id_gudang, (int)$produk->id_kategori, (int)$produk->id_produk);
         $produk = Produk::create($request->all());
         $ukuran_total_produk = $produk->stok * $produk->ukuran_produk;
         $gudang = Gudang::find($produk->id_gudang);
         if($gudang->ukuran_gudang < $ukuran_total_produk) {
             $produk->delete();
-            return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
+            return redirect()->route('produk.index')->with([
+                'status'=> 'error',
+                'judul'=> 'Gagal',
+                'message'=> 'Ukuran gudang tidak mencukupi'
+            ]);
         } else {
             $gudang->ukuran_gudang -= $ukuran_total_produk;
             $gudang->save();
-            return redirect('produk')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('produk.index')->with([
+                'status'=> 'success',
+                'judul'=> 'Berhasil',
+                'message'=> 'Data produk berhasil ditambahkan'
+            ]);
         }
     }
 
@@ -152,7 +161,11 @@ class ProdukController extends Controller
                     $produk->stok = $stokLama;
                     $produk->ukuran_produk = $ukuranProduk;
                     $produk->save();
-                    return redirect('produk')->with('error', 'Ukuran gudang tidak mencukupi');
+                    return redirect()->route('produk.index')->with([
+                        'status'=> 'error',
+                        'judul'=> 'Gagal',
+                        'message'=> 'Ukuran gudang tidak mencukupi'
+                    ]);
                 } else {
                     $gudang->ukuran_gudang -= $selisihUkuranTotal;
                     $gudang->save();
@@ -163,13 +176,21 @@ class ProdukController extends Controller
                 $gudang->save();
             }
 
-            return redirect('produk')->with('success', 'Data berhasil diubah');
+            return redirect()->route('produk.index')->with([
+                'status'=> 'success',
+                'judul'=> 'Berhasil',
+                'message'=> 'Data produk berhasil diubah'
+            ]);
         } else {
             $gudangLama->ukuran_gudang += $ukuranTotalLama;
             $gudangLama->save();
             $gudangBaru->ukuran_gudang -= $ukuranTotalBaru;
             $gudangBaru->save();
-            return redirect('produk')->with('success', 'Data berhasil diubah');
+            return redirect()->route('produk.index')->with([
+                'status'=> 'success',
+                'judul'=> 'Berhasil',
+                'message'=> 'Data produk berhasil diubah'
+            ]);
         }
 
     }
