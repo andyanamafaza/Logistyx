@@ -87,7 +87,7 @@
                     <div class="col-lg-12">
                         <div class="chart">
                             <!-- Sales Chart Canvas -->
-                            <canvas id="salesChart" style="height: 180px;"></canvas>
+                            <canvas id="salesChart" style="height: 250px;"></canvas>
                         </div>
                         <!-- /.chart-responsive -->
                     </div>
@@ -98,6 +98,27 @@
         <!-- /.box -->
     </div>
     <!-- /.col -->
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Tingkat Kepenuhan Gudang</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="chart">
+                            <!-- Sales Chart Canvas -->
+                            <canvas id="warehouseChart" style="height: 250px;"></canvas>
+                        </div>
+                        <!-- /.chart-responsive -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
 </div>
 <!-- /.row (main row) -->
 @endsection
@@ -110,30 +131,103 @@ $(function() {
     // Get context with jQuery - using jQuery's .get() method.
     var salesChartCanvas = $('#salesChart').get(0).getContext('2d');
     // This will get the first returned node in the jQuery collection.
-    var salesChart = new Chart(salesChartCanvas);
-
-    var salesChartData = {
-        labels: {{ json_encode($data_tanggal) }},
-        datasets: [
-            {
-                label: 'Pendapatan',
-                fillColor           : 'rgba(60,141,188,0.9)',
-                strokeColor         : 'rgba(60,141,188,0.8)',
-                pointColor          : '#3b8bba',
-                pointStrokeColor    : 'rgba(60,141,188,1)',
-                pointHighlightFill  : '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: {{ json_encode($data_pendapatan) }}
+    var salesChart = new Chart(salesChartCanvas, {
+        type: 'line',
+        data: {
+            labels: {{ json_encode($data_tanggal) }},
+            datasets: [
+                {
+                    label: 'Pendapatan (Rp)',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: 4,
+                    pointHoverRadius: 4,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: {{ json_encode($data_pendapatan) }}
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return 'Rp' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += 'Rp' + context.parsed.y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            }
+                            return label;
+                        }
+                    }
+                }
             }
-        ]
-    };
+        }
+    });
 
-    var salesChartOptions = {
-        pointDot : false,
-        responsive : true
-    };
+    // Warehouse Fulfillment Chart
+    var warehouseChartCanvas = $('#warehouseChart').get(0).getContext('2d');
+    var warehouseChart = new Chart(warehouseChartCanvas, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($data_gudang) !!},
+            datasets: [{
+                label: 'Tingkat Kepenuhan (%)',
+                backgroundColor: 'rgba(60,141,188,0.9)',
+                borderColor: 'rgba(60,141,188,0.8)',
+                hoverBackgroundColor: 'rgba(60,141,188,0.7)',
+                hoverBorderColor: 'rgba(60,141,188,1)',
+                data: {!! json_encode($data_kepenuhan) !!}
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 10
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y + '%';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
 
-    salesChart.Line(salesChartData, salesChartOptions);
-});
+    });
+
 </script>
 @endpush
