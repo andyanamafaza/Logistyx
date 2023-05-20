@@ -37,7 +37,7 @@
                             <th>Harga Jual</th>
                             <th>Stok</th>
                             <th>Ukuran Produk</th>
-                            <th width="15%"><i class="fa fa-cog"></i></th>
+                            <th width="10%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
                 </form>

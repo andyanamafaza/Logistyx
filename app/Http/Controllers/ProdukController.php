@@ -40,13 +40,13 @@ class ProdukController extends Controller
             })
             ->addColumn('kode_produk', function ($produk) {
                 return '<span class="badge bg-info">'. $produk->kode_produk .'</span>';
-                // return '<span class="label label-success">'. $produk->kode_produk .'</span>';
+
             })
             ->addColumn('harga_beli', function ($produk) {
-                return uang_indonesia($produk->harga_beli);
+                return 'Rp'. uang_indonesia($produk->harga_beli);
             })
             ->addColumn('harga_jual', function ($produk) {
-                return uang_indonesia($produk->harga_jual);
+                return 'Rp'. uang_indonesia($produk->harga_jual);
             })
             ->addColumn('stok', function ($produk) {
                 return uang_indonesia($produk->stok);

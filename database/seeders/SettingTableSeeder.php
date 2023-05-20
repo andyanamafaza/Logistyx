@@ -21,7 +21,7 @@ class SettingTableSeeder extends Seeder
             'telepon' => '081234779987',
             'tipe_nota' => 1, // kecil
             'diskon' => 0,
-            'path_logo' => '/img/logo.png',
+            'path_logo' => '/img/logistyx.png',
 
         ]);
     }
