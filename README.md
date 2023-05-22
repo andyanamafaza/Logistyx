@@ -16,7 +16,6 @@ Aplikasi POS atau point of sales adalah aplikasi yang digunakan untuk mengelola 
 - Manajemen Gudang
 - Manajemen Produk
 - Manajemen Supplier
-- Transaksi Pengeluaran
 - Transaksi Pembelian
 - Transaksi Penjualan
 - Custom Tipe Nota
