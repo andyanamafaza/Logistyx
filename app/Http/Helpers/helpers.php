@@ -42,10 +42,11 @@ function tambah_nol_didepan($id_gudang, $id_kategori, $id_produk)
     $hex_id_kategori = str_pad($hex_id_kategori, 2, "0", STR_PAD_LEFT);
     $hex_id_produk = str_pad($hex_id_produk, 2, "0", STR_PAD_LEFT);
 
-    $product_code = "G" . $hex_id_gudang . "P" . $hex_id_kategori . $hex_id_produk;
+    $product_code = "G" . strtoupper($hex_id_gudang) . "P" . strtoupper($hex_id_kategori) . strtoupper($hex_id_produk);
 
     return $product_code;
 }
+
 
 
 function tanggal_indonesia($tgl, $tampil_hari = true)
