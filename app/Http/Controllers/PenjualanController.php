@@ -8,7 +8,6 @@ use App\Models\Produk;
 use App\Models\Setting;
 use App\Models\Gudang;
 use Illuminate\Http\Request;
-use PDF;
 
 class PenjualanController extends Controller
 {
@@ -84,11 +83,10 @@ class PenjualanController extends Controller
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
             $gudang = Gudang::find($produk->id_gudang);
-            // $selisih_jumlah = $item->jumlah - $item->jumlah_awal;
             $selisih_jumlah = $item->jumlah_awal - $item->jumlah ;
 
             if ($selisih_jumlah > 0) {
-                $tambahan_stok = $selisih_jumlah;
+                $tambahan_stok = $selisih_jumlah + 1;
                 $produk->stok += $tambahan_stok;
                 $produk->update();
 
@@ -110,6 +108,9 @@ class PenjualanController extends Controller
                 return redirect()->route('penjualan_detail.index')
                     ->with('error', 'Jumlah stok produk atau ukuran gudang tidak mencukupi. Silakan ubah jumlah item yang diinginkan.');
             }
+
+            $item->jumlah_awal = 0;
+            $item->update();
         }
 
         return redirect()->route('transaksi.selesai');
@@ -186,19 +187,4 @@ class PenjualanController extends Controller
         return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail'));
     }
 
-    public function notaBesar()
-    {
-        $setting = Setting::first();
-        $penjualan = Penjualan::find(session('id_penjualan'));
-        if (! $penjualan) {
-            abort(404);
-        }
-        $detail = PenjualanDetail::with('produk')
-            ->where('id_penjualan', session('id_penjualan'))
-            ->get();
-
-        $pdf = PDF::loadView('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
-        $pdf->setPaper(0, 0, 609, 440, 'potrait');
-        return $pdf->stream('Transaksi-'. date('Y-m-d-his') .'.pdf');
-    }
 }

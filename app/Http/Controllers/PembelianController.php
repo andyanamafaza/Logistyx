@@ -89,7 +89,7 @@ class PembelianController extends Controller
             $selisih_jumlah =  $item->jumlah - $item->jumlah_awal;
 
             if ($selisih_jumlah > 0) {
-                $tambahan_stok = $selisih_jumlah;
+                $tambahan_stok = $selisih_jumlah + 1;
                 $produk->stok += $tambahan_stok;
                 $produk->update();
 
@@ -112,8 +112,9 @@ class PembelianController extends Controller
                 $gudang->ukuran_gudang += $ukuran_pengurangan_gudang;
                 $gudang->update();
             }
+            $item->jumlah_awal = 0;
+            $item->update();
         }
-
         if (!$ukuranGudangCukup) {
             PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->delete();
             $pembelian->delete();
