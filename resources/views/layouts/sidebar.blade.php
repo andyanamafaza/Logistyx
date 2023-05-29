@@ -24,129 +24,129 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-tachometer"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
                 @if(Auth::user()->level == 0)
-                    <li class="nav-header">Master</li>
-                    <li class="nav-item">
-                        <a href="{{ route('gudang.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-warehouse"></i>
-                            <p>
-                                Gudang
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('kategori.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cube"></i>
-                            <p>
-                                Kategori
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('produk.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cubes"></i>
-                            <p>
-                                Produk
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('supplier.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-truck"></i>
-                            <p>
-                                Supplier
-                            </p>
-                        </a>
-                    </li>
+                <li class="nav-header">Master</li>
+                <li class="nav-item">
+                    <a href="{{ route('gudang.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-warehouse"></i>
+                        <p>
+                            Gudang
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('kategori.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cube"></i>
+                        <p>
+                            Kategori
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('produk.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cubes"></i>
+                        <p>
+                            Produk
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('supplier.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-truck"></i>
+                        <p>
+                            Supplier
+                        </p>
+                    </a>
+                </li>
 
-                    <li class="nav-header">Transaksi</li>
+                <li class="nav-header">Transaksi</li>
 
 
-                    <li class="nav-item">
-                        <a href="{{ route('pembelian.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-download"></i>
-                            <p>
-                                Pembelian
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('penjualan.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-upload"></i>
-                            <p>
-                                Penjualan
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('transaksi.baru') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cart-arrow-down"></i>
-                            <p>
-                                Transaksi Aktif
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('transaksi.baru') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cart-arrow-down"></i>
-                            <p>
-                                Transaksi Baru
-                            </p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{{ route('pembelian.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-download"></i>
+                        <p>
+                            Pembelian
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('penjualan.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-upload"></i>
+                        <p>
+                            Penjualan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cart-arrow-down"></i>
+                        <p>
+                            Transaksi Aktif
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cart-arrow-down"></i>
+                        <p>
+                            Transaksi Baru
+                        </p>
+                    </a>
+                </li>
 
-                    <li class="nav-header">SYSTEM</li>
+                <li class="nav-header">SYSTEM</li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('user.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-users"></i>
-                            <p>
-                                User
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('setting.index') }}" class="nav-link">
-                            <i class="fa fa-cogs"></i>
-                            <p>
-                                Setting
-                            </p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{{ route('user.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            User
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('setting.index') }}" class="nav-link">
+                        <i class="fa fa-cogs"></i>
+                        <p>
+                            Setting
+                        </p>
+                    </a>
+                </li>
                 @else
                 <li class="nav-header">Transaksi</li>
-                    <li class="nav-item">
-                        <a href="{{ route('penjualan.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-upload"></i>
-                            <p>
-                                Penjualan
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('transaksi.baru') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cart-arrow-down"></i>
-                            <p>
-                                Transaksi Aktif
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('transaksi.baru') }}" class="nav-link">
-                            <i class="nav-icon fa fa-cart-arrow-down"></i>
-                            <p>
-                                Transaksi Baru
-                            </p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{{ route('penjualan.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-upload"></i>
+                        <p>
+                            Penjualan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cart-arrow-down"></i>
+                        <p>
+                            Transaksi Aktif
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru') }}" class="nav-link">
+                        <i class="nav-icon fa fa-cart-arrow-down"></i>
+                        <p>
+                            Transaksi Baru
+                        </p>
+                    </a>
+                </li>
                 @endif
 
             </ul>
@@ -155,3 +155,21 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        var url = window.location;
+        // for sidebar menu entirely but not cover treeview
+        $('ul.nav-sidebar a').filter(function() {
+            return this.href == url;
+        }).addClass('active');
+
+        // for treeview
+        $('ul.nav-treeview a').filter(function() {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+    })
+
+</script>
+@endpush
